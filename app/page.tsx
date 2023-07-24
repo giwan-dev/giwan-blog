@@ -1,3 +1,4 @@
+import { AnchorSpan } from "@/components/anchor-span"
 import { Code } from "@/components/code"
 import { H1 } from "@/components/h1"
 import Link from "next/link"
@@ -36,11 +37,8 @@ export default function Home() {
       <ul className="[&>li+li]:mt-6">
         {posts.map((post) => (
           <li key={post.id}>
-            <Link
-              href={`/posts/${post.id}`}
-              className="border border-transparent border-b-blue-500 border-b-solid border-opacity-0 text-lg font-bold transition-colors text-blue-600 hover:border-opacity-100"
-            >
-              {post.title}
+            <Link href={`/posts/${post.id}`} className="text-lg font-bold">
+              <AnchorSpan>{post.title}</AnchorSpan>
             </Link>
 
             <p>{post.description}</p>

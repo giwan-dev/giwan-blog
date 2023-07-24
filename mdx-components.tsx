@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types"
 import { H1 } from "./components/h1"
 import { Code } from "./components/code"
+import { AnchorSpan } from "./components/anchor-span"
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -18,11 +19,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     p: ({ children }) => <p className="my-4 leading-7">{children}</p>,
     code: Code,
     a: ({ href, children }) => (
-      <a
-        href={href}
-        className="transition-colors text-blue-500 hover:text-blue-400"
-      >
-        {children}
+      <a href={href}>
+        <AnchorSpan>{children}</AnchorSpan>
       </a>
     ),
     // TODO: 코드 하이라이팅 기능
