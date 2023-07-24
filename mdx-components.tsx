@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types"
 import { H1 } from "./components/h1"
+import { Code } from "./components/code"
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -15,11 +16,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     h1: H1,
     h2: ({ children }) => <h2 className="text-2xl mt-6 mb-3">{children}</h2>,
     p: ({ children }) => <p className="my-4 leading-7">{children}</p>,
-    code: ({ children }) => (
-      <code className="rounded-md px-1 py-0.5 bg-gray-200 text-sm">
-        {children}
-      </code>
-    ),
+    code: Code,
     a: ({ href, children }) => (
       <a
         href={href}
