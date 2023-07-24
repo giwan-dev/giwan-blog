@@ -17,7 +17,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     h2: ({ children }) => <h2 className="text-2xl mt-6 mb-3">{children}</h2>,
     p: ({ children }) => <p className="my-4 leading-7">{children}</p>,
     code: ({ children }) => (
-      <code className="rounded-md px-1 py-0.5 bg-gray-200">{children}</code>
+      <code className="rounded-md px-1 py-0.5 bg-gray-200 text-sm">
+        {children}
+      </code>
     ),
     a: ({ href, children }) => (
       <a
