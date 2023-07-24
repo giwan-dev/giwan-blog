@@ -16,6 +16,16 @@ const posts = [
       </>
     ),
   },
+  {
+    id: "constructing-blog",
+    title: "블로그 만들기",
+    description: (
+      <>
+        자유롭게 쓸 수 있는 나만의 블로그를 처음 설정하고 배포하면서 겪은 소소한
+        이야기
+      </>
+    ),
+  },
 ]
 
 export default function Home() {
