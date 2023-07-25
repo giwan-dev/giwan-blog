@@ -1,3 +1,11 @@
+import { METADATA_TITLE_POSTFIX } from "@/common/constants"
+
+export const metadata = {
+  title: `React 콜백 prop 네이밍 컨벤션 ${METADATA_TITLE_POSTFIX}`,
+  description:
+    'prop으로 콜백 함수를 넘겨 줄 때 on[EventName] 형태의 이름을 사용한다.\n클린 코드 어딘가 나올 거 같은 "함수는 동사로 시작한다"라는 규칙을 왜 콜백 prop에는 적용하지 않을까?',
+}
+
 # React 콜백 prop 네이밍 컨벤션
 
 prop으로 콜백 함수를 넘겨 줄 때 `on[EventName]` 형태로 이름을 짓는다.
