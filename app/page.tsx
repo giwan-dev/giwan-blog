@@ -1,7 +1,12 @@
+import { METADATA_TITLE_POSTFIX } from "@/common/constants"
 import { AnchorSpan } from "@/components/anchor-span"
 import { Code } from "@/components/code"
 import { H1 } from "@/components/h1"
 import Link from "next/link"
+
+export const metadata = {
+  title: `글 ${METADATA_TITLE_POSTFIX}`,
+}
 
 const posts = [
   {
