@@ -5,6 +5,16 @@ import Link from "next/link"
 
 const posts = [
   {
+    id: "product-manager-of-design-system",
+    title: "디자인 시스템의 PM",
+    description: (
+      <>
+        사랑하는 제품이 나오면 PM을 하고 싶다던 개발자는 코드를 너무
+        사랑했습니다.
+      </>
+    ),
+  },
+  {
     id: "react-callback-prop-naming-convention",
     title: "React 콜백 prop 네이밍 컨벤션",
     description: (
