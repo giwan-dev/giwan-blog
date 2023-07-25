@@ -1,7 +1,18 @@
+import localFont from "next/font/local"
 import "./globals.css"
-import { Inter } from "next/font/google"
 
-const inter = Inter({ subsets: ["latin"] })
+const pretendard = localFont({
+  src: "./fonts/PretendardVariable_1.3.8.woff2",
+  display: "swap",
+})
+
+const d2Coding = localFont({
+  src: [
+    { path: "./fonts/D2Coding_1.3.2.ttf", weight: "400" },
+    { path: "./fonts/D2CodingBold_1.3.2.ttf", weight: "700" },
+  ],
+  variable: "--font-d2-coding",
+})
 
 export const metadata = {
   title: "Create Next App",
@@ -15,7 +26,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={inter.className}>{children}</body>
+      <body className={`${pretendard.className} ${d2Coding.variable}`}>
+        {children}
+      </body>
     </html>
   )
 }
