@@ -5,6 +5,22 @@ import "./globals.css"
 const pretendard = localFont({
   src: "./fonts/PretendardVariable_1.3.8.woff2",
   display: "swap",
+  fallback: [
+    "Pretendard",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "system-ui",
+    "Roboto",
+    "Helvetica Neue",
+    "Segoe UI",
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "sans-serif",
+  ],
 })
 
 const d2Coding = localFont({
@@ -13,6 +29,8 @@ const d2Coding = localFont({
     { path: "./fonts/D2CodingBold_1.3.2.ttf", weight: "700" },
   ],
   variable: "--font-d2-coding",
+  display: "swap",
+  fallback: ["menlo", "Courier New", "monospace"],
 })
 
 export const metadata = {
