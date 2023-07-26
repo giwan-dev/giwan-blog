@@ -1,5 +1,4 @@
 import { METADATA_TITLE_POSTFIX } from "@/common/constants"
-import { AnchorSpan } from "@/components/anchor-span"
 import { Code } from "@/components/code"
 import { H1 } from "@/components/h1"
 import Link from "next/link"
@@ -53,7 +52,7 @@ export default function Home() {
         {posts.map((post) => (
           <li key={post.id}>
             <Link href={`/posts/${post.id}`} className="text-lg font-bold">
-              <AnchorSpan>{post.title}</AnchorSpan>
+              {post.title}
             </Link>
 
             <p>{post.description}</p>

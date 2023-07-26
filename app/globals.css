@@ -20,3 +20,17 @@ html {
   @apply text-gray-900;
   @apply bg-white;
 }
+
+a[href] {
+  @apply border;
+  @apply border-transparent;
+  @apply border-b-blue-400;
+  @apply border-opacity-0;
+  @apply pb-0.5;
+  @apply transition-colors;
+  @apply text-blue-500;
+}
+
+a[href]:hover {
+  @apply border-opacity-100;
+}
