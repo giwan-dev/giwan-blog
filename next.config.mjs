@@ -1,3 +1,5 @@
+import createMDXWrapper from "@next/mdx"
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
@@ -6,13 +8,6 @@ const nextConfig = {
   },
 }
 
-import emoji from "remark-emoji"
-import createMDXWrapper from "@next/mdx"
-
-const withMDX = createMDXWrapper({
-  options: {
-    remarkPlugins: [emoji],
-  },
-})
+const withMDX = createMDXWrapper()
 
 export default withMDX(nextConfig)
