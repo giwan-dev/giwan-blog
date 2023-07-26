@@ -1,5 +1,6 @@
 import { METADATA_TITLE_POSTFIX } from "@/common/constants"
 import { PostTitle } from "@/components/post-title"
+import { OutdatedParagraph } from "@/components/outdated-paragraph"
 
 export const metadata = {
   title: `블로그 만들기 ${METADATA_TITLE_POSTFIX}`,
@@ -47,12 +48,12 @@ Next.js는 `node_modules`를 참조하니 서버에서 실행하는 코드는 �
 Next.js에서 제공하는 MDX 가이드 문서를 따라 설정을 완료했고, 이 글이 처음 MDX로 작성해보는 글이다.
 하지만, 아직 리액트 컴포넌트를 사용할 일은 없어서 아쉽다.
 
-Next.js에서 시키는 대로 기본 설정만 하면 이모지를 제대로 렌더링하지 않는 현상을 발견했다.
-🎉(폭죽 이모지)를 써도 `:tada:` 이렇게만 표시된다.
-플러그인을 쓰면 되지 않을까 하는 생각을 했고, 가이드 문서에 있던 "rehype", "remarks" 플러그인 설정이 떠올랐다.
-`remarks-emoji`라는 플러그인을 찾았고, 적용해 주니 문제없이 렌더링되었다.
-슬랙처럼 :tada:를 입력했을 때 자동으로 🎉로 변환해주면 좋겠다.
-플러그인의 기능으로 되지 않을까 싶어서 다음에 좀 더 깊이 알아봐야겠다.
+<OutdatedParagraph
+  outdated={
+    'Next.js에서 시키는 대로 기본 설정만 하면 이모지를 제대로 렌더링하지 않는 현상을 발견했다. 🎉(폭죽 이모지)를 써도 `:tada:` 이렇게만 표시된다. 플러그인을 쓰면 되지 않을까 하는 생각을 했고, 가이드 문서에 있던 "rehype", "remarks" 플러그인 설정이 떠올랐다. `remarks-emoji`라는 플러그인을 찾았고, 적용해 주니 문제없이 렌더링되었다. 슬랙처럼 :tada:를 입력했을 때 자동으로 🎉로 변환해주면 좋겠다. 플러그인의 기능으로 되지 않을까 싶어서 다음에 좀 더 깊이 알아봐야겠다.'
+  }
+  reason="왜 그런진 모르겠지만 지금 보니 remarks-emoji 패키지가 없어도 이모지가 잘 표시된다. 그래도 :tada:를 자동으로 🎉로 변환하는 건 여전히 필요한 기능이다. 🥺"
+/>
 
 ## MDX가 렌더링하는 태그의 스타일 적용
 
