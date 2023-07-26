@@ -1,4 +1,5 @@
 import localFont from "next/font/local"
+import { Analytics } from "@vercel/analytics/react"
 import "./globals.css"
 
 const pretendard = localFont({
@@ -28,6 +29,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${pretendard.className} ${d2Coding.variable}`}>
         {children}
+        <Analytics />
       </body>
     </html>
   )
