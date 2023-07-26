@@ -46,7 +46,8 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${pretendard.className} ${d2Coding.variable}`}>
-        {children}
+        <main className="mx-auto max-w-3xl p-8">{children}</main>
+
         <Analytics />
       </body>
     </html>

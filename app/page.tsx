@@ -45,7 +45,7 @@ const posts = [
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-3xl px-8 py-10">
+    <>
       <H1>글</H1>
 
       <ul className="[&>li+li]:mt-6">
@@ -59,6 +59,6 @@ export default function Home() {
           </li>
         ))}
       </ul>
-    </main>
+    </>
   )
 }
