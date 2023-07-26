@@ -25,7 +25,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     // TODO: 코드 하이라이팅 기능
     pre: ({ children }) => (
-      <pre className="rounded-md p-3 bg-gray-200 text-sm [&>code]:rounded-none [&>code]:p-0 [&>code]:bg-transparent">
+      <pre className="rounded-md p-3 bg-gray-200 text-sm overflow-auto [&>code]:rounded-none [&>code]:p-0 [&>code]:bg-transparent">
         {children}
       </pre>
     ),
