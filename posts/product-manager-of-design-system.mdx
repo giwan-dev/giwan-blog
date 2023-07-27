@@ -1,13 +1,14 @@
-import { METADATA_TITLE_POSTFIX } from "@/common/constants"
 import { PostTitle } from "@/components/post-title"
 
-export const metadata = {
-  title: `디자인 시스템의 PM ${METADATA_TITLE_POSTFIX}`,
+export const meta = {
+  title: "디자인 시스템의 PM",
   description:
     "사랑하는 제품이 나오면 PM을 하고 싶다던 개발자는 코드를 너무 사랑했습니다.",
+  createdAt: "2023-07-25T22:22+09:00",
+  updatedAt: undefined,
 }
 
-<PostTitle title="디자인 시스템의 PM" />
+<PostTitle title={meta.title} />
 
 어느날부터 사랑하는 제품이 생기면 PM(Product Manager a.k.a PO)로 일해보고 싶다는 생각이 들었다.
 해결할 문제를 정의하고, 문제를 구체화해서 계획을 세우고, 무엇을 먼저 구현할 지 결정하고,
