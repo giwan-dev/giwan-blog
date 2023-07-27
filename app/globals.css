@@ -10,11 +10,11 @@ html {
 a[href] {
   @apply border;
   @apply border-transparent;
-  @apply border-b-blue-400;
+  @apply border-b-blue-500;
   @apply border-opacity-0;
   @apply pb-0.5;
   @apply transition-colors;
-  @apply text-blue-500;
+  @apply text-blue-600;
 }
 
 a[href]:hover {
