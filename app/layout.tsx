@@ -1,6 +1,8 @@
 import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 import "./globals.css"
+import Head from "next/head"
+import { Metadata } from "next"
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable_1.3.8.woff2",
@@ -33,9 +35,12 @@ const d2Coding = localFont({
   fallback: ["menlo", "Courier New", "monospace"],
 })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "박기완의 블로그",
   description: "나를 담은 내 글",
+  other: {
+    "google-site-verification": "-2fgoWCQZX7khkKnklfDqdCw9VtssDHPaVNj2Hx56Ls",
+  },
 }
 
 export default function RootLayout({
