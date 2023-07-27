@@ -43,7 +43,7 @@ export default async function Home() {
               {post.title}
             </Link>
 
-            <p>{post.description}</p>
+            <p className="whitespace-pre-line">{post.description}</p>
           </li>
         ))}
       </ul>
