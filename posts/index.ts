@@ -2,16 +2,25 @@ import { RequiredProperties } from "@/common/utils/type"
 import { MDXProps } from "mdx/types"
 
 export async function importPost(slug: string) {
-  const { default: MDXContent, meta }: Awaited<typeof import("@/posts/*.mdx")> =
-    await import(`@/posts/${slug}.mdx`)
+  try {
+    const {
+      default: MDXContent,
+      meta,
+    }: Awaited<typeof import("@/posts/*.mdx")> = await import(
+      `@/posts/${slug}.mdx`
+    )
 
-  if (meta.createdAt === undefined) {
+    if (meta.createdAt === undefined) {
+      return undefined
+    }
+
+    return {
+      MDXContent,
+      meta: meta as RequiredProperties<typeof meta, "createdAt">,
+    }
+  } catch (error) {
+    console.error(error)
     return undefined
-  }
-
-  return {
-    MDXContent,
-    meta: meta as RequiredProperties<typeof meta, "createdAt">,
   }
 }
 
