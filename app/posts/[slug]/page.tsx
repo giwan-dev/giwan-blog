@@ -6,7 +6,12 @@ interface Props {
   params: { slug: string }
 }
 export default async function PostDetailPage({ params: { slug } }: Props) {
-  const { MDXContent } = await importPost(slug)
+  const post = await importPost(slug)
+  if (post === undefined) {
+    throw new Error(`Post ${slug} not found`)
+  }
+
+  const { MDXContent } = post
 
   return (
     <article>
@@ -18,7 +23,12 @@ export default async function PostDetailPage({ params: { slug } }: Props) {
 export async function generateMetadata({
   params: { slug },
 }: Props): Promise<Metadata> {
-  const { meta } = await importPost(slug)
+  const post = await importPost(slug)
+  if (post === undefined) {
+    throw new Error(`Post ${slug} not found`)
+  }
+
+  const { meta } = post
 
   return {
     title: `${meta.title} ${METADATA_TITLE_POSTFIX}`,

@@ -19,7 +19,12 @@ export default async function Home() {
   const posts = (
     await Promise.all(
       postSlugs.map(async (slug) => {
-        const { meta } = await importPost(slug)
+        const post = await importPost(slug)
+        if (post === undefined) {
+          return undefined
+        }
+        const { meta } = post
+
         return {
           id: slug,
           title: meta.title,
@@ -28,9 +33,12 @@ export default async function Home() {
         }
       }),
     )
-  ).sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   )
+    .filter((post): post is NonNullable<typeof post> => !!post)
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
 
   return (
     <>

@@ -1,10 +1,18 @@
+import { RequiredProperties } from "@/common/utils/type"
 import { MDXProps } from "mdx/types"
 
 export async function importPost(slug: string) {
   const { default: MDXContent, meta }: Awaited<typeof import("@/posts/*.mdx")> =
     await import(`@/posts/${slug}.mdx`)
 
-  return { MDXContent, meta }
+  if (meta.createdAt === undefined) {
+    return undefined
+  }
+
+  return {
+    MDXContent,
+    meta: meta as RequiredProperties<typeof meta, "createdAt">,
+  }
 }
 
 declare module "@/posts/*.mdx" {
@@ -13,7 +21,7 @@ declare module "@/posts/*.mdx" {
   interface PostMeta {
     title: string
     description: string
-    createdAt: ISO8601
+    createdAt: ISO8601 | undefined
     updatedAt: ISO8601 | undefined
   }
 
