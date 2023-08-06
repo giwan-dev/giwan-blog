@@ -1,0 +1,88 @@
+import { PostTitle } from "@/components/post-title"
+
+export const meta = {
+  title: "React 서버 컴포넌트",
+  description: "React 서버 컴포넌트를 사용하며 겪은 이야기",
+  createdAt: undefined,
+  updatedAt: undefined,
+}
+
+<PostTitle title={meta.title} />
+
+Next.js의 App Router는 React 서버 컴포넌트를 사용한다.
+이 블로그를 만들면서 마주친 서버 컴포넌트의 특징을 모아보려고 한다.
+
+## Context
+
+```text
+Error: React Context is unavailable in Server Components
+```
+
+서버 컴포넌트는 Context를 사용할 수 없다.
+
+## 함수 prop
+
+```text
+Error: Event handlers cannot be passed to Client Component props.
+  <button className=... onClick={function} children=...>
+                                ^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+```
+
+서버 컴포넌트는 클라이언트 컴포넌트로 이벤트 핸들러를 전달할 수 없다.
+예시 오류의 기본 HTML 태그 뿐만 아니라 직접 만든 클라이언트 컴포넌트에 이벤트 핸들러를 전달할 수 없다.
+
+그런데 신기하게도 위 오류는 `onXXX` 컨벤션의 prop에 함수를 전달할 때만 발생한다.
+만약 prop의 이름이 `onXXX`가 아니라면 다음과 같은 오류가 발생한다.
+자식 컴포넌트의 일부를 렌더링하기 위해 prop으로 함수를 전달할 때가 있는데
+모든 함수 prop이 오류를 일으킨다면 그러한 prop을 사용할 수 없게 되고, 제약이 생길 것 같았다.
+렌더링하기 위한 함수는
+
+```text
+Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with "use server".
+  <... renderSomething={function}>
+```
+
+`"use server"`가 무엇일까? [React 공식 문서의 설명](https://react.dev/reference/react/use-server)
+
+시키는대로 `"use server"`를 추가했는데 이번엔 Next.js 컴파일 오류가 발생했다.
+
+```text
+Error:
+  x To use Server Actions, please enable the feature flag in your Next.js config. Read more: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions#convention
+    ,-[/Users/giwan/Developer/giwan-blog/app/albums/page.tsx:8:1]
+  8 |
+  9 |       <SpotifyLoginButton
+ 10 |         renderSomething={() => {
+ 11 |           "use server"
+    :           ^^^^^^^^^^^^
+ 12 |           return "foo"
+ 13 |         }}
+ 14 |       />
+    `----
+
+  x Server actions must be async functions
+    ,-[/Users/giwan/Developer/giwan-blog/app/albums/page.tsx:7:1]
+  7 |           <H1>앨범</H1>
+  8 |
+  9 |           <SpotifyLoginButton
+ 10 | ,->         renderSomething={() => {
+ 11 | |             "use server"
+ 12 | |             return "foo"
+ 13 | `->         }}
+ 14 |           />
+ 15 |         </>
+ 16 |       )
+    `----
+```
+
+Server Actions가 무엇일까? [Next.js 공식 문서](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions)
+React의 Actions 기반 API.
+플래그를 작동시키고 비동기 함수로 바꿔봤다.
+오.. 클라이언트에 전달된 함수가 호출되면 서버로 API 요청이 발생한다.
+함수의 반환 값이 응답으로 넘어오게 된다.
+이를 이용하면 네트워크 요청 함수를 일일히 작성하지 않아도 백엔드와 프론트엔드 코드가 자연스럽게 섞이도록 작성할 수 있을 것 같다.
+
+## 참고
+
+- [React 18: 리액트 서버 컴포넌트 준비하기 - 카카오 페이 Tech](https://tech.kakaopay.com/post/react-server-components)
