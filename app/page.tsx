@@ -1,5 +1,4 @@
 import { METADATA_TITLE_POSTFIX } from "@/common/constants"
-import { Code } from "@/components/code"
 import { H1 } from "@/components/h1"
 import { importPost } from "@/posts"
 import Link from "next/link"

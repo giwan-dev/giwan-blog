@@ -1,8 +1,8 @@
 import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 import "./globals.css"
-import Head from "next/head"
 import { Metadata } from "next"
+import { ReactNode } from "react"
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable_1.3.8.woff2",
@@ -43,11 +43,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <body className={`${pretendard.className} ${d2Coding.variable}`}>
