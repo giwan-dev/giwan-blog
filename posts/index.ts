@@ -3,12 +3,9 @@ import { MDXProps } from "mdx/types"
 
 export async function importPost(slug: string) {
   try {
-    const {
-      default: MDXContent,
-      meta,
-    }: Awaited<typeof import("@/posts/*.mdx")> = await import(
+    const { default: MDXContent, meta } = (await import(
       `@/posts/${slug}.mdx`
-    )
+    )) as Awaited<typeof import("@/posts/*.mdx")>
 
     if (meta.createdAt === undefined) {
       return undefined
