@@ -7,7 +7,7 @@ const postSlugs = [
   "constructing-blog",
 ]
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: BASE_URL,
