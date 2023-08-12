@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react"
 import "./globals.css"
 import { Metadata } from "next"
 import { ReactNode } from "react"
+import { RootContextProvider } from "@/components/root-context-provider"
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable_1.3.8.woff2",
@@ -47,7 +48,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <body className={`${pretendard.className} ${d2Coding.variable}`}>
-        <main className="mx-auto max-w-3xl p-8">{children}</main>
+        <main className="mx-auto max-w-3xl p-8">
+          <RootContextProvider>{children}</RootContextProvider>
+        </main>
 
         <Analytics />
       </body>
