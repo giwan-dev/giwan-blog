@@ -6,6 +6,14 @@ const nextConfig = {
   experimental: {
     mdxRs: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.scdn.co",
+      },
+    ],
+  },
 }
 
 const withMDX = createMDXWrapper()
