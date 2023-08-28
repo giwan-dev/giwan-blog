@@ -1,12 +1,12 @@
 import { H1 } from "@/components/h1"
-import { SpotifyAuth } from "./spotify-auth"
+import { SpotifySearchSection } from "./spotify-search"
 
 export default function AlbumListPage() {
   return (
     <>
       <H1>음반</H1>
 
-      <SpotifyAuth />
+      <SpotifySearchSection />
     </>
   )
 }
