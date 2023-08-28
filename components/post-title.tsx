@@ -4,7 +4,7 @@ export function PostTitle({ title }: { title: string }) {
   return (
     <div className="mb-8 text-4xl font-bold">
       <Link
-        href="/"
+        href="/posts"
         className="!border-none !text-gray-500 hover:!text-gray-400"
       >
         <span>글</span>
