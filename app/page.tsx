@@ -23,6 +23,12 @@ export default function HomePage() {
             음반 🚧
           </Link>
         </li>
+
+        <li>
+          <Link href="/log" className="text-xl">
+            로그
+          </Link>
+        </li>
       </ul>
     </>
   )
