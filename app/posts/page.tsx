@@ -1,7 +1,7 @@
 import { METADATA_TITLE_POSTFIX } from "@/common/constants"
 import { H1 } from "@/components/h1"
-import { importPost } from "@/posts"
 import Link from "next/link"
+import { importPost } from "./[slug]/posts"
 
 export const metadata = {
   title: `글 ${METADATA_TITLE_POSTFIX}`,

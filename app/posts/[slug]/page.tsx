@@ -1,6 +1,6 @@
 import { METADATA_TITLE_POSTFIX } from "@/common/constants"
-import { importPost } from "@/posts"
 import { Metadata } from "next"
+import { importPost } from "./posts"
 
 interface Props {
   params: { slug: string }

@@ -4,8 +4,8 @@ import { MDXProps } from "mdx/types"
 export async function importPost(slug: string) {
   try {
     const { default: MDXContent, meta } = (await import(
-      `@/posts/${slug}.mdx`
-    )) as Awaited<typeof import("@/posts/*.mdx")>
+      `./${slug}.mdx`
+    )) as Awaited<typeof import("./*.mdx")>
 
     if (meta.createdAt === undefined) {
       return undefined
@@ -21,7 +21,7 @@ export async function importPost(slug: string) {
   }
 }
 
-declare module "@/posts/*.mdx" {
+declare module "./*.mdx" {
   type ISO8601 = string
 
   interface PostMeta {
