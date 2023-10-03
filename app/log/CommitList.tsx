@@ -45,7 +45,7 @@ export function CommitList({ initialCommits }: { initialCommits: Commit[] }) {
               <div className="font-medium">{title}</div>
 
               {message.length > 0 ? (
-                <div className="mt-3 ml-5 rounded-sm p-2 text-sm bg-gray-50">
+                <div className="mt-3 rounded-sm p-2 text-sm bg-gray-50">
                   {/* TODO: 마크다운으로 렌더링 */}
                   {message.join("\n")}
                 </div>
