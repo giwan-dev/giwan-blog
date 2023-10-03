@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { COMMIT_COUNT_PER_PAGE, type Commit } from "@/services/github"
-import { LogApiQueryKey, type LogApiResponse } from "../api/log/route"
+import { LogApiQueryKey, type LogApiResponse } from "../api/log"
 
 export function CommitList({ initialCommits }: { initialCommits: Commit[] }) {
   const [commits, setCommits] = useState(initialCommits)
