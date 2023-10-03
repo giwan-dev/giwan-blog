@@ -1,0 +1,80 @@
+import { PostTitle } from "@/components/post-title"
+import { OutdatedParagraph } from "@/components/outdated-paragraph"
+
+export const meta = {
+  title: "왜 Next.js 서버에서 오래된 API 응답을 사용하여 렌더링할까?",
+  description: "문제를 통해 알게 된 Next.js의 data cache 정책",
+  createdAt: "2023-10-03T17:11+09:00",
+  updatedAt: undefined,
+}
+
+<PostTitle title={meta.title} />
+
+GitHub에서 제공하는 API를 이용해 이 블로그의 커밋 로그를 표시하는 기능을 구현하고 있었다.
+그런데 로컬 개발 환경에서 새로 푸시한 커밋이 보이지 않는 문제가 있었다.
+브라우저에서 API를 사용할 땐 최신 커밋 목록을 잘 가져왔기 때문에 서버와 클라이언트 사이의 정책 차이라고 생각했다.
+
+## 무엇이 문제였을까?
+
+`console.log` 여러 번으로 확인해보니 GitHub API 함수 호출까지 모두 정상적으로 이뤄졌지만 API 응답에 오래된 값이 담겨있었다.
+함수를 호출하지만 오래된 값이 담겨있다? 이런 건 보통 캐시 문제다. 새로운 커밋을 푸시하기 전에 호출했던 API 응답의 캐시를 계속 사용하고 있는 것이다.
+
+어디서 캐시가 되는 걸까? GitHub API는 따로 캐시를 하지 않는 것 같았다. Node.js에서 제공하는 fetch API가 캐시 기능이 있다는 건 들어 본 적 없었다.
+그래서 Next.js를 의심했는데 정말이었다. [Next.js는 데이터 fetching 결과를 캐싱](https://nextjs.org/docs/app/building-your-application/caching#data-cache)하고 있었다.
+
+아무 설정을 하지 않았을 때 Next.js는 서버 컴포넌트의 렌더링 과정에서 호출한 `fetch` 함수의 응답을 캐시한다. 그리고 이 행동은 `cache`, `next.revalidate` 파라미터를 통해 조절할 수 있다.
+
+GitHub API는 `octokit`으로 사용하지만, 이 패키지 내부에서 `fetch`를 사용할 것이다. 그래서 Next.js가 확장한 fetch API를 통해 응답을 캐시하는 것이다.
+`cache` 속성을 사용하지 않고 `headers['Cache-Control']` 파라미터를 통해 캐시를 안 하게 막을 수도 있었다. `no-store`를 적용해주면 캐시를 사용하지 않게 되면서 최신 데이터를 불러오는 것을 확인했다.
+
+## 어떻게 고칠까?
+
+사실 배포 환경을 기준으로 생각해보면 이 API는 vercel에서 빌드할 때 딱 한 번 실행한다.
+/log 페이지는 아무 파라미터가 없기 때문에 Next.js가 static한 페이지로 판단하여 빌드할 때 HTML 파일을 생성해 버리기 때문이다. 다음은 Next.js의 빌드 결과이다.
+
+```sh
+Route (app)                              Size     First Load JS
+┌ ○ /                                    181 B          87.6 kB
+├ ○ /_not-found                          883 B          81.4 kB
+├ ○ /albums                              6.74 kB        98.5 kB
+├ λ /api/auth/[...nextauth]              0 B                0 B
+├ λ /api/log                             0 B                0 B
+├ ○ /log                                 53.5 kB         134 kB
+├ ○ /posts                               181 B          87.6 kB
+├ λ /posts/[slug]                        181 B          87.6 kB
+└ ○ /sitemap.xml                         0 B                0 B
++ First Load JS shared by all            80.5 kB
+  ├ chunks/864-6925c483e7b25ba0.js       27.5 kB
+  ├ chunks/fd9d1056-fd5c17de0a8e4c09.js  51 kB
+  ├ chunks/main-app-64bf4a61fddb6f80.js  234 B
+  └ chunks/webpack-0796d8b73dee27f2.js   1.79 kB
+
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+```
+
+빌드할 때는 캐시를 사용하지 않을 것이니 배포되는 실제 코드는 이 API가 캐시되든 말든 사실 상관이 없다.
+문제가 되는 건 개발 환경이다.
+
+개발 환경에서 작업하고 코드를 푸시했을 때 개발 환경에 이전 캐시가 남아있고, 푸시된 커밋을 불러오지 못한다.
+로컬에 캐시를 저장하는 부분이 있을 거라고 생각했고 Next.js의 모든 것은 `.next` 디렉토리에 있으니 여기를 뒤져 봤다.
+`.next/cache/fetch-cache` 디렉토리가 있었고 이 안에 API 응답 캐시가 저장되고 있었다.
+
+그런데 `.next/cache/fetch-cache` 디렉토리를 지워도 이미 실행 중인 개발 서버는 최신 API 응답을 받아오지 못했다.
+강력 새로고침을 통해 최신 API 응답을 받을 수 있었다.
+그런데 이 강력 새로고침은 굳이 `.next/cache/fetch-cache` 디렉토리를 지우지 않아도 최신 API 응답을 받아올 수 있는 방법이었다.
+
+Next.js의 캐시는 `.next/cache/fetch-cache` 외에 실행 중인 서버의 메모리에도 저장되는 것으로 추측했다.
+그리고 HTML 파일을 요청할 때의 캐시 정책을 해당 페이지의 HTML을 렌더링할 때의 네트워크 요청의 캐시 정책에 재활용하는 것으로 보인다.
+그렇기 때문에 강력 새로고침을 하면 네트워크 요청까지 캐시된 값을 사용하지 않게 된 걸로 보인다.
+
+정리하면 로컬 개발 환경에서는 강력 새로고침을 이용해 캐시를 모두 무효화할 수 있다.
+
+## 더 많은 생각
+
+문제를 해결하는 방법은 항상 여러 가지다. 그 중에 가장 적은 곳에 영향을 주면서 문제의 본질을 해결할 수 있는 방법을 골라야 한다.
+이번 문제는 Next.js의 Data Caching 기능이 원인이었지만, 단순히 이를 비활성화하면 캐시를 사용하지 않아 생기는 다른 문제를 해결해야 한다.
+더 들여다보면 캐시 정책이 어떻든 실제 배포되는 코드에 영향을 주지 않았다. 그렇다면 아무 설정을 하지 않고 프레임워크의 기본 작동을 유지하는 것이 가장 좋다고 생각한다.
+정말로 문제가 되는 부분은 개발 환경에서였기 때문에 이를 해결할 수 있는 간결한 해결책을 찾아내었다.
+이런 사고의 흐름은 이번 문제 뿐만 아니라 많은 문제에 적용할 수 있는 프레임워크일 것이다.
