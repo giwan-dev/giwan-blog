@@ -11,7 +11,7 @@ const SPOTIFY_SEARCH_QUERY_INPUT_NAME = "spotify-search-query"
 export function SpotifySearchSection() {
   const { data } = useSession()
   const [albums, setAlbums] = useState<
-    { id: string; coverUrl: string; name: string }[]
+    { id: string; coverUrl: string | undefined; name: string }[]
   >([])
 
   const search = async (query: string) => {
@@ -94,7 +94,7 @@ export function SpotifySearchSection() {
       setAlbums(
         json.albums.items.map((album) => ({
           id: album.id,
-          coverUrl: album.images[0].url,
+          coverUrl: album.images[0]?.url,
           name: album.name,
         })),
       )
@@ -136,12 +136,14 @@ export function SpotifySearchSection() {
       <ul>
         {albums.map((album) => (
           <li key={album.id}>
-            <Image
-              src={album.coverUrl}
-              alt={`${album.name} 커버 이미지`}
-              width={48}
-              height={48}
-            />
+            {album.coverUrl !== undefined && (
+              <Image
+                src={album.coverUrl}
+                alt={`${album.name} 커버 이미지`}
+                width={48}
+                height={48}
+              />
+            )}
 
             {album.name}
           </li>
