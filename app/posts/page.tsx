@@ -13,6 +13,7 @@ const postSlugs = [
   "react-callback-prop-naming-convention",
   "constructing-blog",
   "trubleshooting-stale-data-cache-of-nextjs-server",
+  "my-tech-stack",
 ]
 
 export default async function PostListPage() {

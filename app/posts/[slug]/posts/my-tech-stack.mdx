@@ -1,0 +1,51 @@
+import { PostTitle } from "@/components/post-title"
+import { Strikethrough } from "@/components/strikethrough"
+
+export const meta = {
+  title: "지금 내가 웹 어플리케이션을 시작한다면?",
+  description: "어떤 기술 스택을 고를까?",
+  createdAt: "2023-10-30T21:55+09:00",
+  updatedAt: undefined,
+}
+
+<PostTitle title={meta.title} />
+
+지금 내가 웹 어플리케이션을 시작한다면 어떤 기술 스택을 고를까?
+
+## 시작점
+
+여전히 나에게 가장 익숙한 UI 렌더링 기술은 React이다.
+그렇다면 React 시작점으로는 어떤 스택이 좋을까?
+현 회사에서 vite 기반의 React 어플리케이션을 직접 세팅하는 구조를 사용하고 있지만,
+그래도 새로 시작한다면 메타 프레임워크를 사용할 것이다.
+
+내가 알고 있는 React 메타 프레임워크는 Next.js와 Remix인데,
+둘 중 좀 더 성숙한 Next.js를 고르겠다.
+Remix의 방향성이 흥미로웠지만 Next.js가 빠르게 이를 따라잡는 것 같기도 하고,
+더 많은 레퍼런스와 내가 익숙한 도구인 Next.js가 더 끌린다.
+
+## CSS 도구
+
+가장 간결한 CSS 기술 스택은 [CSS 모듈](https://github.com/css-modules/css-modules)이라 느껴진다.
+여기에 약간의 편의성을 더하고자 SCSS 문법을 사용할 것 같다.
+
+CSS 스타일을 작성할 때는 한 번 추상화된 언어를 사용하는 Tailwind CSS의 문법이 더 마음에 들지만,
+CSS selector나 CSS Variables 같은 CSS 기술을 적극적으로 사용하게 되면 Tailwind CSS는 조금 걸리적거리는 것 같다.
+
+물론 CSS 모듈은 타이핑이 잘 안 되는 게 단점이다.
+내가 작성한 클래스 이름을 나의 타자 정확도에 의존하여 연결해야 한다.
+물론 오타가 나면 스타일링이 안 되겠지만 여전히 실수하기 좋은 구조인 건 맞다.
+Prisma가 node_modules에 타입 정의를 만들어 넣거나
+Next.js가 자체 타입 정의를 만들어 놓는 것처럼(사실 이건 기억이 가물가물하다.)
+CSS 모듈도 파싱해서 타이핑해버리는 방법이 있을 거 같다.
+[`typed-css-modules`](https://www.npmjs.com/package/typed-css-modules)라는 라이브러리가 있긴 한데 버전이 0.8...
+
+<Strikethrough>Rust 사이드 프로젝트로 좋을지도?!</Strikethrough>
+
+Tailwind도 VSCode 확장에 의존해야 하고...
+타입 안정성을 얻으려면 css-in-js 쪽으로 가야하는데 Build time CSS가 아니면 CSS를 클라이언트에서 만드는 비효율이 마음에 안 든다.
+아쉽게도 Build time CSS는 아직 내가 깊이 사용해보지 않아서 기술 스택으로 뽑기 어렵다.
+
+사실 여기까지만 골라도 Next.js가 지원하는 것들로 어찌저찌 개발할 수 있다.
+다만 프로덕트가 점점 복잡해질수록 더 복잡한 기능이 필요해지고,
+직접 구현하는 것보단 라이브러리를 사용하는 것이 수월하니 그런 문제를 해결하는 라이브러리 후보군을 뽑아 놓는 것도 좋겠다.
